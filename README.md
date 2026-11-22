@@ -61,7 +61,7 @@ pnpm build && pnpm start
 ### Dados de demonstração
 
 O comando `pnpm db:seed` apaga o banco local e cria um cenário fictício com quatro pessoas,
-dois projetos e catorze tarefas. Todos entram com a senha `demo12345`:
+dois projetos e dezesseis tarefas. Todos entram com a senha `demo12345`:
 
 | E-mail | Nome |
 |---|---|

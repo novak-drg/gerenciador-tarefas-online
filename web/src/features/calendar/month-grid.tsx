@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 import { CalendarEventLink } from './calendar-event';
 import { eventKey, WEEKDAY_HEADERS, type GridDay, type MonthGrid } from './grid';
 
-const MAX_VISIBLE = 3;
+const MAX_VISIBLE = 2;
 const NO_EVENTS: CalendarEvent[] = [];
 
 const dayNumberClass = 'inline-flex h-6 min-w-6 items-center justify-center text-xs font-medium';
@@ -52,7 +52,7 @@ function DayCell({ day, events, today, loading, onOpenDay }: DayCellProps) {
   return (
     <li
       className={cn(
-        'flex min-h-40 min-w-0 flex-col gap-1 p-1.5',
+        'flex min-h-29 min-w-0 flex-col gap-1 p-1.5',
         day.inMonth ? 'bg-surface' : 'bg-drawer',
       )}
     >

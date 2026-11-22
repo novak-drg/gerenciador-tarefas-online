@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 const DEMO_DATA = process.env.NEXT_PUBLIC_DEMO_DATA === 'true';
 
 /** Quiet chip that says the people and projects on screen are demonstration data. */
-export function DemoBadge({ className }: { className?: string }) {
+export function DemoBadge({ className, short = false }: { className?: string; short?: boolean }) {
   if (!DEMO_DATA) return null;
   return (
     <span
@@ -14,7 +14,7 @@ export function DemoBadge({ className }: { className?: string }) {
         className,
       )}
     >
-      Dados de demonstração
+      {short ? 'Demonstração' : 'Dados de demonstração'}
     </span>
   );
 }

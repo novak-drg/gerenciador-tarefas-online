@@ -38,7 +38,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <Menu className="size-5" />
         </IconButton>
         <Wordmark href="/inicio" />
-        <DemoBadge className="mr-2 ml-auto" />
+        <DemoBadge short className="mr-3 ml-auto" />
       </header>
 
       <Sidebar />

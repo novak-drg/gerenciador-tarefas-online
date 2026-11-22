@@ -93,6 +93,22 @@ const portalTasks: SeedTask[] = [
     creator: 'beatriz',
   },
   {
+    title: 'Revisar o fluxo de recuperação de senha',
+    status: 'TODO',
+    priority: 'MEDIUM',
+    due: 2,
+    assignee: 'helena',
+    creator: 'rafael',
+  },
+  {
+    title: 'Conferir os textos com o suporte',
+    status: 'TODO',
+    priority: 'LOW',
+    due: 2,
+    assignee: 'beatriz',
+    creator: 'helena',
+  },
+  {
     title: 'Testar com um grupo de clientes',
     status: 'TODO',
     priority: 'LOW',

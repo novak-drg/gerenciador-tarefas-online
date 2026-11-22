@@ -58,7 +58,7 @@ A API não inicia, e explica o motivo, se `JWT_SECRET` tiver menos de 32 caracte
 
 `pnpm db:seed` **apaga todos os usuários, projetos e tarefas** e recria dados fictícios para uso
 local: 4 usuários, 2 projetos (uma festa comunitária e a reorganização de um arquivo de escritório) e
-14 tarefas com prazos relativos à data de hoje. O script recusa rodar contra um banco que não seja
+16 tarefas com prazos relativos à data de hoje. O script recusa rodar contra um banco que não seja
 local. Todos os usuários usam a senha `demo12345`:
 
 - `helena@demo.local`
