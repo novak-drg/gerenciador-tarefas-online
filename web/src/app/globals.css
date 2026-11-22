@@ -1,0 +1,167 @@
+@import 'tailwindcss';
+
+@theme inline {
+  --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+    monospace;
+}
+
+@theme {
+  /* Only the tokens below exist: no default palette, sizes, radii or shadows */
+  --color-*: initial;
+  --text-*: initial;
+  --radius-*: initial;
+  --shadow-*: initial;
+  --breakpoint-*: initial;
+
+  --breakpoint-sm: 40rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-shell: 900px;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+
+  /* Surfaces */
+  --color-scene: #e9e2d3;
+  --color-surface: #fbf8f0;
+  --color-elevated: #ffffff;
+  --color-recess: #ded5c2;
+  --color-drawer: #f4efe4;
+
+  /* Ink and text */
+  --color-ink: #131a22;
+  --color-ink-hover: #1e2833;
+  --color-on-ink: #f3ead9;
+  --color-secondary: #555555;
+  --color-placeholder: #716e68;
+  --color-disabled: #8a867d;
+
+  /* Lines and veils */
+  --color-hairline: rgba(19, 26, 34, 0.1);
+  --color-edge: #d6cfc1;
+  --color-hairline-soft: rgba(19, 26, 34, 0.05);
+  --color-control: rgba(19, 26, 34, 0.45);
+  --color-pressed: rgba(19, 26, 34, 0.05);
+  --color-overlay: rgba(19, 26, 34, 0.4);
+
+  /* Accent (periwinkle) */
+  --color-accent-subtle: #dcddf3;
+  --color-accent-mid: #9fa5ee;
+  --color-accent: #4046b8;
+
+  /* Semantics */
+  --color-success: #2b8202;
+  --color-success-bg: rgba(56, 165, 0, 0.1);
+  --color-danger: #d82b25;
+  --color-danger-text: #b3211c;
+  --color-danger-bg: rgba(216, 43, 37, 0.08);
+  --color-warning: #a68b2e;
+  --color-warning-text: #7a6515;
+  --color-warning-bg: rgba(166, 139, 46, 0.08);
+
+  /* Type scale */
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1.5;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.5;
+  --text-base: 1rem;
+  --text-base--line-height: 1.5;
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.4;
+  --text-xl: 1.375rem;
+  --text-xl--line-height: 1.3;
+  --text-2xl: 1.75rem;
+  --text-2xl--line-height: 1.2;
+  --text-2xl--letter-spacing: -0.5px;
+  --text-3xl: 2.125rem;
+  --text-3xl--line-height: 1.2;
+  --text-3xl--letter-spacing: -0.5px;
+  --text-label: 0.6875rem;
+  --text-label--line-height: 1.4;
+  --text-label--letter-spacing: 0.12em;
+  --text-label--font-weight: 500;
+
+  /* Radii */
+  --radius-chip: 6px;
+  --radius-control: 8px;
+  --radius-card: 12px;
+  --radius-panel: 16px;
+
+  /* Only for things that float */
+  --shadow-float: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+@layer base {
+  html {
+    background: var(--color-scene);
+    color: var(--color-ink);
+    -webkit-text-size-adjust: 100%;
+    scrollbar-color: color-mix(in srgb, var(--color-ink) 28%, transparent) transparent;
+    scrollbar-width: thin;
+  }
+
+  body {
+    min-height: 100dvh;
+    background: var(--color-scene);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-variant-numeric: tabular-nums;
+  }
+
+  ::selection {
+    background: var(--color-accent-subtle);
+    color: var(--color-ink);
+  }
+
+  input,
+  textarea,
+  select {
+    caret-color: var(--color-accent);
+    accent-color: var(--color-accent);
+  }
+
+  ::placeholder {
+    color: var(--color-placeholder);
+    opacity: 1;
+  }
+
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  :where(button, [role='button'], summary, select) {
+    cursor: pointer;
+  }
+
+  :where(button, input, select, textarea):disabled {
+    cursor: not-allowed;
+  }
+
+  input[type='date']::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    opacity: 0.7;
+  }
+
+  dialog {
+    color: var(--color-ink);
+  }
+
+  dialog::backdrop {
+    background: var(--color-overlay);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
