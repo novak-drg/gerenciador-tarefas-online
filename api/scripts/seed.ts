@@ -49,9 +49,9 @@ const people = [
   { key: 'lucas', name: 'Lucas Andrade', email: 'lucas@demo.local' },
 ] as const;
 
-const festaTasks: SeedTask[] = [
+const portalTasks: SeedTask[] = [
   {
-    title: 'Reservar o salão da paróquia',
+    title: 'Levantar os requisitos com o suporte',
     status: 'DONE',
     priority: 'HIGH',
     due: -12,
@@ -59,8 +59,8 @@ const festaTasks: SeedTask[] = [
     creator: 'helena',
   },
   {
-    title: 'Pedir autorização para o uso da rua',
-    description: 'Protocolar o ofício na subprefeitura com 30 dias de antecedência.',
+    title: 'Desenhar o fluxo de abertura de chamado',
+    description: 'Protótipo navegável validado com duas pessoas do suporte.',
     status: 'DONE',
     priority: 'HIGH',
     due: -6,
@@ -68,8 +68,8 @@ const festaTasks: SeedTask[] = [
     creator: 'helena',
   },
   {
-    title: 'Fechar o orçamento da comida',
-    description: 'Comparar três propostas de buffet e de barracas de comida típica.',
+    title: 'Implementar a tela de login',
+    description: 'Entrada por e-mail e senha, com recuperação de acesso.',
     status: 'IN_PROGRESS',
     priority: 'HIGH',
     due: -2,
@@ -77,7 +77,7 @@ const festaTasks: SeedTask[] = [
     creator: 'helena',
   },
   {
-    title: 'Montar a programação musical',
+    title: 'Criar a API de chamados',
     status: 'IN_PROGRESS',
     priority: 'MEDIUM',
     due: 4,
@@ -85,7 +85,7 @@ const festaTasks: SeedTask[] = [
     creator: 'rafael',
   },
   {
-    title: 'Imprimir os cartazes de divulgação',
+    title: 'Escrever os textos de ajuda',
     status: 'TODO',
     priority: 'MEDIUM',
     due: 2,
@@ -93,7 +93,7 @@ const festaTasks: SeedTask[] = [
     creator: 'beatriz',
   },
   {
-    title: 'Recrutar voluntários para a recepção',
+    title: 'Testar com um grupo de clientes',
     status: 'TODO',
     priority: 'LOW',
     due: 9,
@@ -101,14 +101,14 @@ const festaTasks: SeedTask[] = [
     creator: 'helena',
   },
   {
-    title: 'Contratar o som e a iluminação',
+    title: 'Configurar o ambiente de produção',
     status: 'TODO',
     priority: 'HIGH',
     due: 20,
     creator: 'helena',
   },
   {
-    title: 'Fazer a prestação de contas do evento',
+    title: 'Publicar a primeira versão',
     status: 'TODO',
     priority: 'LOW',
     due: 38,
@@ -117,9 +117,9 @@ const festaTasks: SeedTask[] = [
   },
 ];
 
-const arquivoTasks: SeedTask[] = [
+const onboardingTasks: SeedTask[] = [
   {
-    title: 'Levantar o que existe nas caixas do depósito',
+    title: 'Listar os acessos necessários por função',
     status: 'DONE',
     priority: 'MEDIUM',
     due: -8,
@@ -127,9 +127,8 @@ const arquivoTasks: SeedTask[] = [
     creator: 'rafael',
   },
   {
-    title: 'Definir a tabela de temporalidade',
-    description:
-      'Prazos de guarda por tipo de documento: contratos, notas fiscais e correspondências.',
+    title: 'Escrever o guia do primeiro dia',
+    description: 'O que instalar, com quem falar e onde ficam os documentos da equipe.',
     status: 'IN_PROGRESS',
     priority: 'HIGH',
     due: 3,
@@ -137,7 +136,7 @@ const arquivoTasks: SeedTask[] = [
     creator: 'rafael',
   },
   {
-    title: 'Digitalizar os contratos de 2019 a 2022',
+    title: 'Gravar o vídeo de apresentação da empresa',
     status: 'IN_PROGRESS',
     priority: 'MEDIUM',
     due: 12,
@@ -145,7 +144,7 @@ const arquivoTasks: SeedTask[] = [
     creator: 'rafael',
   },
   {
-    title: 'Comprar caixas e etiquetas padronizadas',
+    title: 'Montar o kit de boas-vindas',
     status: 'TODO',
     priority: 'LOW',
     due: 6,
@@ -153,14 +152,14 @@ const arquivoTasks: SeedTask[] = [
     creator: 'beatriz',
   },
   {
-    title: 'Descartar documentos com prazo vencido',
+    title: 'Definir os padrinhos de cada área',
     status: 'TODO',
     priority: 'MEDIUM',
     due: 30,
     creator: 'rafael',
   },
   {
-    title: 'Treinar a equipe no novo padrão de arquivo',
+    title: 'Agendar a conversa de 30 dias',
     status: 'TODO',
     priority: 'MEDIUM',
     due: 45,
@@ -191,23 +190,22 @@ async function main(): Promise<void> {
 
   const projects = [
     {
-      name: 'Festa Comunitária do Bairro',
-      description:
-        'Organização da festa de aniversário do bairro promovida pela associação de moradores.',
+      name: 'Portal de Atendimento ao Cliente',
+      description: 'Portal para os clientes abrirem e acompanharem chamados de suporte.',
       start: -30,
       end: 45,
       owner: 'helena',
       members: ['rafael', 'beatriz', 'lucas'],
-      tasks: festaTasks,
+      tasks: portalTasks,
     },
     {
-      name: 'Reorganização do Arquivo do Escritório',
-      description: 'Classificar, digitalizar e padronizar o arquivo de documentos do escritório.',
+      name: 'Onboarding de Novos Colaboradores',
+      description: 'Organizar o material e as etapas de entrada de quem chega à equipe.',
       start: -15,
       end: 60,
       owner: 'rafael',
       members: ['helena', 'beatriz'],
-      tasks: arquivoTasks,
+      tasks: onboardingTasks,
     },
   ];
 
