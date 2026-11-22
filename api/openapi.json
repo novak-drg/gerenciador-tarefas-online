@@ -1,0 +1,1963 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "operationId": "AuthController_register",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResultDto"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "E-mail já cadastrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseDto"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Cadastrar um novo usuário",
+        "tags": [
+          "Autenticação"
+        ]
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "operationId": "AuthController_login",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResultDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "E-mail ou senha inválidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseDto"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Entrar com e-mail e senha",
+        "tags": [
+          "Autenticação"
+        ]
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "operationId": "AuthController_me",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Dados do usuário autenticado",
+        "tags": [
+          "Autenticação"
+        ]
+      }
+    },
+    "/health": {
+      "get": {
+        "operationId": "HealthController_check",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "status": "ok"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Verificar se a API está no ar",
+        "tags": [
+          "Saúde"
+        ]
+      }
+    },
+    "/users": {
+      "get": {
+        "operationId": "UsersController_search",
+        "parameters": [
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "maxLength": 100,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Buscar usuários por nome ou e-mail (até 10 resultados)",
+        "tags": [
+          "Usuários"
+        ]
+      }
+    },
+    "/projects": {
+      "get": {
+        "operationId": "ProjectsController_list",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProjectSummaryDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Listar os projetos de que participo",
+        "tags": [
+          "Projetos"
+        ]
+      },
+      "post": {
+        "operationId": "ProjectsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProjectDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Criar um projeto (quem cria vira dono)",
+        "tags": [
+          "Projetos"
+        ]
+      }
+    },
+    "/projects/{id}": {
+      "get": {
+        "operationId": "ProjectsController_getOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Detalhar um projeto",
+        "tags": [
+          "Projetos"
+        ]
+      },
+      "patch": {
+        "operationId": "ProjectsController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProjectDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Atualizar um projeto (somente o dono)",
+        "tags": [
+          "Projetos"
+        ]
+      },
+      "delete": {
+        "operationId": "ProjectsController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Excluir um projeto com suas tarefas (somente o dono)",
+        "tags": [
+          "Projetos"
+        ]
+      }
+    },
+    "/projects/{id}/members": {
+      "post": {
+        "operationId": "ProjectsController_addMember",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddMemberDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Adicionar um membro ao projeto (somente o dono)",
+        "tags": [
+          "Projetos"
+        ]
+      }
+    },
+    "/projects/{id}/members/{userId}": {
+      "delete": {
+        "operationId": "ProjectsController_removeMember",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "userId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Remover um membro do projeto (somente o dono)",
+        "tags": [
+          "Projetos"
+        ]
+      }
+    },
+    "/projects/{id}/tasks": {
+      "get": {
+        "operationId": "TasksController_list",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TaskDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Listar as tarefas de um projeto, por coluna e posição",
+        "tags": [
+          "Tarefas"
+        ]
+      },
+      "post": {
+        "operationId": "TasksController_create",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTaskDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Criar uma tarefa no fim da coluna",
+        "tags": [
+          "Tarefas"
+        ]
+      }
+    },
+    "/tasks/{id}": {
+      "get": {
+        "operationId": "TasksController_getOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Detalhar uma tarefa",
+        "tags": [
+          "Tarefas"
+        ]
+      },
+      "patch": {
+        "operationId": "TasksController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTaskDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Atualizar os dados de uma tarefa",
+        "tags": [
+          "Tarefas"
+        ]
+      },
+      "delete": {
+        "operationId": "TasksController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Excluir uma tarefa (dono do projeto ou quem a criou)",
+        "tags": [
+          "Tarefas"
+        ]
+      }
+    },
+    "/tasks/{id}/move": {
+      "patch": {
+        "operationId": "TasksController_move",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MoveTaskDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Todas as tarefas do projeto, já reordenadas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TaskDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Mover uma tarefa de coluna ou posição",
+        "tags": [
+          "Tarefas"
+        ]
+      }
+    },
+    "/me/tasks": {
+      "get": {
+        "operationId": "TasksController_mine",
+        "parameters": [
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "TODO",
+                "IN_PROGRESS",
+                "DONE"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TaskWithProjectDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Listar as tarefas atribuídas a mim",
+        "tags": [
+          "Tarefas"
+        ]
+      }
+    },
+    "/calendar": {
+      "get": {
+        "operationId": "CalendarController_events",
+        "parameters": [
+          {
+            "name": "from",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CalendarEventDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Prazos de tarefas e projetos em um intervalo (máximo 92 dias)",
+        "tags": [
+          "Calendário"
+        ]
+      }
+    },
+    "/calendar.ics": {
+      "get": {
+        "operationId": "CalendarController_ics",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Arquivo iCalendar",
+            "content": {
+              "text/calendar": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Exportar os prazos em formato iCalendar (.ics)",
+        "tags": [
+          "Calendário"
+        ]
+      }
+    },
+    "/dashboard/summary": {
+      "get": {
+        "operationId": "DashboardController_summary",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DashboardSummaryDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Resumo do painel: projetos, tarefas em aberto, atrasadas e próximas",
+        "tags": [
+          "Painel"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Gerenciador de Tarefas Online",
+    "description": "API REST do Gerenciador de Tarefas Online.",
+    "version": "1.0.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
+    "schemas": {
+      "RegisterDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 80
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "maxLength": 254
+          },
+          "password": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 72
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "password"
+        ]
+      },
+      "AuthResultDto": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "email"
+            ]
+          },
+          "accessToken": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "user",
+          "accessToken"
+        ]
+      },
+      "ErrorResponseDto": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "integer"
+          },
+          "error": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "details": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "path",
+                "message"
+              ]
+            }
+          }
+        },
+        "required": [
+          "statusCode",
+          "error",
+          "message"
+        ]
+      },
+      "LoginDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "maxLength": 254
+          },
+          "password": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 72
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "UserDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "email"
+        ]
+      },
+      "ProjectSummaryDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "startDate": {
+            "type": "string"
+          },
+          "dueDate": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "OWNER",
+              "MEMBER"
+            ]
+          },
+          "memberCount": {
+            "type": "integer"
+          },
+          "taskCounts": {
+            "type": "object",
+            "properties": {
+              "TODO": {
+                "type": "integer"
+              },
+              "IN_PROGRESS": {
+                "type": "integer"
+              },
+              "DONE": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "TODO",
+              "IN_PROGRESS",
+              "DONE"
+            ]
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "description",
+          "startDate",
+          "dueDate",
+          "role",
+          "memberCount",
+          "taskCounts",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "CreateProjectDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 80
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 500,
+            "nullable": true
+          },
+          "startDate": {
+            "type": "string"
+          },
+          "dueDate": {
+            "type": "string"
+          },
+          "memberIds": {
+            "type": "array",
+            "maxItems": 100,
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "startDate",
+          "dueDate"
+        ]
+      },
+      "ProjectDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "startDate": {
+            "type": "string"
+          },
+          "dueDate": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "OWNER",
+              "MEMBER"
+            ]
+          },
+          "memberCount": {
+            "type": "integer"
+          },
+          "taskCounts": {
+            "type": "object",
+            "properties": {
+              "TODO": {
+                "type": "integer"
+              },
+              "IN_PROGRESS": {
+                "type": "integer"
+              },
+              "DONE": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "TODO",
+              "IN_PROGRESS",
+              "DONE"
+            ]
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "email"
+                  ]
+                },
+                "role": {
+                  "type": "string",
+                  "enum": [
+                    "OWNER",
+                    "MEMBER"
+                  ]
+                },
+                "addedAt": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "user",
+                "role",
+                "addedAt"
+              ]
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "description",
+          "startDate",
+          "dueDate",
+          "role",
+          "memberCount",
+          "taskCounts",
+          "createdAt",
+          "updatedAt",
+          "members"
+        ]
+      },
+      "UpdateProjectDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 80
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 500,
+            "nullable": true
+          },
+          "startDate": {
+            "type": "string"
+          },
+          "dueDate": {
+            "type": "string"
+          }
+        }
+      },
+      "AddMemberDto": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "userId"
+        ]
+      },
+      "MemberDto": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "email"
+            ]
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "OWNER",
+              "MEMBER"
+            ]
+          },
+          "addedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "user",
+          "role",
+          "addedAt"
+        ]
+      },
+      "TaskDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "projectId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "TODO",
+              "IN_PROGRESS",
+              "DONE"
+            ]
+          },
+          "priority": {
+            "type": "string",
+            "enum": [
+              "LOW",
+              "MEDIUM",
+              "HIGH"
+            ]
+          },
+          "position": {
+            "type": "integer"
+          },
+          "dueDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "assignee": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "email"
+            ],
+            "nullable": true
+          },
+          "createdBy": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "email"
+            ]
+          },
+          "completedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "projectId",
+          "title",
+          "description",
+          "status",
+          "priority",
+          "position",
+          "dueDate",
+          "assignee",
+          "createdBy",
+          "completedAt",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "CreateTaskDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 120
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 2000,
+            "nullable": true
+          },
+          "priority": {
+            "type": "string",
+            "enum": [
+              "LOW",
+              "MEDIUM",
+              "HIGH"
+            ]
+          },
+          "dueDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "assigneeId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "TODO",
+              "IN_PROGRESS",
+              "DONE"
+            ]
+          }
+        },
+        "required": [
+          "title"
+        ]
+      },
+      "UpdateTaskDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 120
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 2000,
+            "nullable": true
+          },
+          "priority": {
+            "type": "string",
+            "enum": [
+              "LOW",
+              "MEDIUM",
+              "HIGH"
+            ]
+          },
+          "dueDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "assigneeId": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          }
+        }
+      },
+      "MoveTaskDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "TODO",
+              "IN_PROGRESS",
+              "DONE"
+            ]
+          },
+          "position": {
+            "type": "integer",
+            "minimum": -1000000,
+            "exclusiveMinimum": false,
+            "maximum": 1000000,
+            "exclusiveMaximum": false
+          }
+        },
+        "required": [
+          "status",
+          "position"
+        ]
+      },
+      "TaskWithProjectDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "projectId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "TODO",
+              "IN_PROGRESS",
+              "DONE"
+            ]
+          },
+          "priority": {
+            "type": "string",
+            "enum": [
+              "LOW",
+              "MEDIUM",
+              "HIGH"
+            ]
+          },
+          "position": {
+            "type": "integer"
+          },
+          "dueDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "assignee": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "email"
+            ],
+            "nullable": true
+          },
+          "createdBy": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "email"
+            ]
+          },
+          "completedAt": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "project": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "name": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "name"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "projectId",
+          "title",
+          "description",
+          "status",
+          "priority",
+          "position",
+          "dueDate",
+          "assignee",
+          "createdBy",
+          "completedAt",
+          "createdAt",
+          "updatedAt",
+          "project"
+        ]
+      },
+      "CalendarEventDto": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "TASK"
+                ]
+              },
+              "date": {
+                "type": "string"
+              },
+              "task": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "projectId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "TODO",
+                      "IN_PROGRESS",
+                      "DONE"
+                    ]
+                  },
+                  "priority": {
+                    "type": "string",
+                    "enum": [
+                      "LOW",
+                      "MEDIUM",
+                      "HIGH"
+                    ]
+                  },
+                  "position": {
+                    "type": "integer"
+                  },
+                  "dueDate": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "assignee": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                      "email"
+                    ],
+                    "nullable": true
+                  },
+                  "createdBy": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                      "email"
+                    ]
+                  },
+                  "completedAt": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "createdAt": {
+                    "type": "string"
+                  },
+                  "updatedAt": {
+                    "type": "string"
+                  },
+                  "project": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "name"
+                    ]
+                  }
+                },
+                "required": [
+                  "id",
+                  "projectId",
+                  "title",
+                  "description",
+                  "status",
+                  "priority",
+                  "position",
+                  "dueDate",
+                  "assignee",
+                  "createdBy",
+                  "completedAt",
+                  "createdAt",
+                  "updatedAt",
+                  "project"
+                ]
+              }
+            },
+            "required": [
+              "kind",
+              "date",
+              "task"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "PROJECT_DEADLINE"
+                ]
+              },
+              "date": {
+                "type": "string"
+              },
+              "project": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "name"
+                ]
+              }
+            },
+            "required": [
+              "kind",
+              "date",
+              "project"
+            ]
+          }
+        ]
+      },
+      "DashboardSummaryDto": {
+        "type": "object",
+        "properties": {
+          "projectCount": {
+            "type": "integer"
+          },
+          "openTaskCount": {
+            "type": "integer"
+          },
+          "overdueTaskCount": {
+            "type": "integer"
+          },
+          "dueThisWeekCount": {
+            "type": "integer"
+          },
+          "upcoming": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "projectId": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "TODO",
+                    "IN_PROGRESS",
+                    "DONE"
+                  ]
+                },
+                "priority": {
+                  "type": "string",
+                  "enum": [
+                    "LOW",
+                    "MEDIUM",
+                    "HIGH"
+                  ]
+                },
+                "position": {
+                  "type": "integer"
+                },
+                "dueDate": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "assignee": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "email"
+                  ],
+                  "nullable": true
+                },
+                "createdBy": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "email"
+                  ]
+                },
+                "completedAt": {
+                  "type": "string",
+                  "nullable": true
+                },
+                "createdAt": {
+                  "type": "string"
+                },
+                "updatedAt": {
+                  "type": "string"
+                },
+                "project": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name"
+                  ]
+                }
+              },
+              "required": [
+                "id",
+                "projectId",
+                "title",
+                "description",
+                "status",
+                "priority",
+                "position",
+                "dueDate",
+                "assignee",
+                "createdBy",
+                "completedAt",
+                "createdAt",
+                "updatedAt",
+                "project"
+              ]
+            }
+          }
+        },
+        "required": [
+          "projectCount",
+          "openTaskCount",
+          "overdueTaskCount",
+          "dueThisWeekCount",
+          "upcoming"
+        ]
+      }
+    }
+  }
+}
