@@ -52,35 +52,36 @@ function DayCell({ day, events, today, loading, onOpenDay }: DayCellProps) {
   return (
     <li
       className={cn(
-        'flex min-h-29 min-w-0 flex-col gap-1 p-1.5',
+        'flex min-h-28 min-w-0 flex-col gap-0.5 p-1',
         day.inMonth ? 'bg-surface' : 'bg-drawer',
       )}
     >
-      <DayNumber day={day} today={today} />
+      {/* The overflow button shares the day-number row so six weeks fit a laptop viewport. */}
+      <div className="flex min-h-7 items-center justify-between gap-1">
+        <DayNumber day={day} today={today} />
+        {!loading && hidden > 0 && (
+          <button
+            type="button"
+            onClick={() => onOpenDay(day.date)}
+            aria-label={`+${hidden} mais em ${formatLong(day.date)}`}
+            className="relative rounded-chip px-1.5 py-1 text-xs font-medium text-accent before:absolute before:inset-x-0 before:-inset-y-1 hover:bg-pressed"
+          >
+            +{hidden} mais
+          </button>
+        )}
+      </div>
       {loading ? (
         <Skeleton className="mx-1 h-4 w-4/5" />
       ) : (
-        <>
-          {visible.length > 0 && (
-            <ul className="flex flex-col gap-0.5">
-              {visible.map((event) => (
-                <li key={eventKey(event)} className="min-w-0">
-                  <CalendarEventLink event={event} today={today} layout="cell" />
-                </li>
-              ))}
-            </ul>
-          )}
-          {hidden > 0 && (
-            <button
-              type="button"
-              onClick={() => onOpenDay(day.date)}
-              aria-label={`+${hidden} mais em ${formatLong(day.date)}`}
-              className="min-h-9 rounded-chip px-1.5 text-left text-xs font-medium text-accent hover:bg-pressed"
-            >
-              +{hidden} mais
-            </button>
-          )}
-        </>
+        visible.length > 0 && (
+          <ul className="flex flex-col gap-0.5">
+            {visible.map((event) => (
+              <li key={eventKey(event)} className="min-w-0">
+                <CalendarEventLink event={event} today={today} layout="cell" />
+              </li>
+            ))}
+          </ul>
+        )
       )}
     </li>
   );
