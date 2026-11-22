@@ -1,6 +1,6 @@
 'use client';
 
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { queryOptions, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { api } from '@/lib/api/client';
 import type {
   CreateProjectBody,
@@ -13,11 +13,19 @@ import { invalidateTaskViews, queryKeys } from '@/lib/query-keys';
 
 export const projectKeys = queryKeys.projects;
 
-export function useProjects() {
-  return useQuery({
+/**
+ * One definition for the project list. Every observer of this key must carry the same `queryFn`:
+ * a query keeps the options of the observer that rendered last, so an observer with a different
+ * (or skipped) function would break the next refetch.
+ */
+export const projectListOptions = () =>
+  queryOptions({
     queryKey: projectKeys.list(),
     queryFn: ({ signal }) => api.get<ProjectSummary[]>('/projects', undefined, { signal }),
   });
+
+export function useProjects() {
+  return useQuery(projectListOptions());
 }
 
 export function useProject(id: string) {
